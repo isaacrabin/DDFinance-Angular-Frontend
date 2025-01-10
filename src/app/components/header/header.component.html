@@ -1,0 +1,46 @@
+
+  <header class="container w-full mx-auto">
+      <div class="flex justify-between w-full">
+        <div>
+          <nz-input-group [nzSuffix]="suffixIconSearch" class="bg-gray-100 rounded-lg">
+            <input
+              type="text"
+              nz-input
+              placeholder="Search here"
+              class="bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 p-1"
+            />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <span class="material-icons text-gray-500">search</span>
+          </ng-template>
+
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex gap-2 items-center">
+            <nz-avatar nzIcon="dollar" style="background-color:#1E3D80;"></nz-avatar>
+            <span class="font-semibold text-xl">40000</span>
+          </div>
+          <div class="cursor-pointer">
+
+
+            <a nz-dropdown [nzDropdownMenu]="menu" class="flex items-center gap-2">
+              <nz-avatar nzIcon="user"></nz-avatar>
+              <span>User</span>
+              <span class="material-icons">
+                keyboard_arrow_down
+              </span>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item>Profile</li>
+                <li nz-menu-item>User Settings</li>
+                <li nz-menu-divider></li>
+                <li nz-menu-item (click)="logout()">Logout</li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+        </div>
+      </div>
+
+  </header>
+

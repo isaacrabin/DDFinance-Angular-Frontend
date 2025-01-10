@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Kumbh+Sans:wght,YOPQ@100..900,40..300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-pattern {
+    background-image: url('assets/bg-02.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+:root{
+    --primary:#4ade80;
+    --gray: #64748b;
+    --dark: #1E3D80;
+    --dark-alt: #334155;
+    --light:#f1f5f9;
+    --sidebar-width: 300px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body{
+    background: var(--light);
+}
+
+.app{
+  display: flex;
+
+  main{
+    flex: 1 1 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+
+    @media  (max-width: 768px){
+      padding-left: 6rem;
+    }
+
+
+  }
+}

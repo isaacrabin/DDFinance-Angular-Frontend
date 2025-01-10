@@ -1,0 +1,59 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 relative overflow-hidden">
+
+  <div class="absolute inset-0 bg-pattern bg-opacity-20"></div>
+
+  <!-- Login Card -->
+  <div class="relative z-10 w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+      Login
+    </h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <!-- Email-->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <nz-input-group [nzPrefix]="prefixEmail">
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            nz-input
+            placeholder="Enter your email"
+            class="w-full p-1"
+          />
+        </nz-input-group>
+        <ng-template #prefixEmail>
+          <span nz-icon nzType="mail" nzTheme="outline"></span>
+        </ng-template>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <nz-input-group [nzPrefix]="prefixPassword">
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            nz-input
+            placeholder="Enter your password"
+            class="w-full p-1"
+          />
+        </nz-input-group>
+        <ng-template #prefixPassword>
+          <span nz-icon nzType="lock" nzTheme="outline"></span>
+        </ng-template>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        nz-button
+        nzType="primary"
+        class="w-full h-10 bg-primaryBlue-300 text-white p-1"
+       
+        [nzLoading]="isLoading"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</div>
