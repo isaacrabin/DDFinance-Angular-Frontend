@@ -15,6 +15,8 @@ import { TableComponent } from '../../components/table/table.component';
 import { ApiService } from '../../_core/services/api.service';
 import { Policy } from '../../_core/models/policy.model';
 import { SearchService } from '../../_core/services/search.service';
+import { ToastrService } from 'ngx-toastr';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 
 
@@ -33,6 +35,7 @@ import { SearchService } from '../../_core/services/search.service';
     NzModalModule,
     ReactiveFormsModule,
     NzFormModule,
+    NzSelectModule,
 
     TableComponent,
     StatsCardComponent],
@@ -56,7 +59,8 @@ export class PoliciesComponent implements OnInit{
     public iconService: NzIconService,
     private fb: FormBuilder,
     private service: ApiService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private toastr: ToastrService
   ){
 
 
@@ -64,7 +68,7 @@ export class PoliciesComponent implements OnInit{
         policyName: ['', [Validators.required]],
         type: ['', [Validators.required]],
         policyNo: ['', [Validators.required]],
-        premium: ['', [Validators.required]]
+        premium: ['', [Validators.required,  Validators.pattern('^[0-9]*$')]]
       });
   }
   ngOnInit(): void {
@@ -126,6 +130,7 @@ export class PoliciesComponent implements OnInit{
           this.isVisible = false;
           this.isConfirmLoading = false;
           this.getPolicies();
+          this.toastr.success('Policy added successfully')
         },
         error: () => {
           this.isConfirmLoading = false;

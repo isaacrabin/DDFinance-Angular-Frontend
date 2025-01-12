@@ -13,6 +13,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -80,7 +81,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     <ng-template #modalContent>
       <form nz-form [formGroup]="policyForm" class="login-form">
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please input policy name!">
             <nz-input-group nzPrefixIcon="file-add">
               <input type="text" class="p-1" nz-input formControlName="policyName" placeholder="Policy Name" />
             </nz-input-group>
@@ -88,7 +89,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please input insurance type!">
             <nz-input-group nzPrefixIcon="file-text">
               <input type="text" class="p-1" nz-input formControlName="type" placeholder="Insurance Type" />
             </nz-input-group>
@@ -96,7 +97,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please input policy number!">
             <nz-input-group nzPrefixIcon="number">
               <input type="text" class="p-1" nz-input formControlName="policyNo" placeholder="Policy Number" />
             </nz-input-group>
@@ -104,7 +105,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please input a valid premium amount!">
             <nz-input-group nzPrefixIcon="dollar">
               <input type="text" class="p-1" nz-input formControlName="premium" placeholder="Premium Amount" />
             </nz-input-group>
@@ -149,7 +150,8 @@ export class TableComponent {
   constructor(
     private modal: NzModalService,
     private service: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ){
     this.policyForm = this.fb.group({
       policyName: ['', [Validators.required]],
@@ -237,6 +239,7 @@ export class TableComponent {
           this.isVisible = false;
           this.isConfirmLoading = false;
           this.getPolicies();
+          this.toastr.success("Policy Updated successfully")
         },
         error: () => {
           this.isConfirmLoading = false;

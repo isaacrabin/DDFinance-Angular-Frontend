@@ -22,7 +22,7 @@
     <ng-template #modalContent>
       <form nz-form [formGroup]="policyForm" class="login-form">
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please enter policy name!">
             <nz-input-group nzPrefixIcon="file-add">
               <input type="text" class="p-1" nz-input formControlName="policyName" placeholder="Policy Name" />
             </nz-input-group>
@@ -30,7 +30,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please provide the insurance type!">
             <nz-input-group nzPrefixIcon="file-text">
               <input type="text" class="p-1" nz-input formControlName="type" placeholder="Insurance Type" />
             </nz-input-group>
@@ -38,7 +38,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please provide the policy number!">
             <nz-input-group nzPrefixIcon="number">
               <input type="text" class="p-1" nz-input formControlName="policyNo" placeholder="Policy Number" />
             </nz-input-group>
@@ -46,7 +46,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
+          <nz-form-control nzErrorTip="Please input a valid premium amount!">
             <nz-input-group nzPrefixIcon="dollar">
               <input type="text" class="p-1" nz-input formControlName="premium" placeholder="Premium Amount" />
             </nz-input-group>

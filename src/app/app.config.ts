@@ -8,9 +8,11 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()]
+  providers: [provideRouter(routes), provideNzI18n(en_US),provideToastr({positionClass:'toast-bottom-right',timeOut:1000}),
+     importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()]
 };
