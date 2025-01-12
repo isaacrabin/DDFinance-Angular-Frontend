@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatsCardComponent } from '../../components/stats-card/stats-card.component';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,6 +12,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
 
 import { TableComponent } from '../../components/table/table.component';
+import { ApiService } from '../../_core/services/api.service';
+import { Policy } from '../../_core/models/policy.model';
+
 
 
 @Component({
@@ -35,9 +38,10 @@ import { TableComponent } from '../../components/table/table.component';
   templateUrl: './policies.component.html',
   styleUrl: './policies.component.scss'
 })
-export class PoliciesComponent {
+export class PoliciesComponent implements OnInit{
   isVisible = false;
   isConfirmLoading = false;
+  policies: Policy[] = [];
 
   policyForm: FormGroup;
 
@@ -47,7 +51,8 @@ export class PoliciesComponent {
 
   constructor(
     public iconService: NzIconService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private service: ApiService
   ){
 
 
@@ -58,6 +63,20 @@ export class PoliciesComponent {
         premium: ['', [Validators.required]]
       });
   }
+  ngOnInit(): void {
+    this.getPolicies()
+  }
+
+  getPolicies(): void {
+    this.service.getPolicies().subscribe({
+      next: (res) => {
+        this.policies = res;
+      },
+      error: (err) => {
+
+      }
+    })
+   }
 
   showModal(): void {
     this.isVisible = true;
@@ -75,10 +94,31 @@ export class PoliciesComponent {
     this.isVisible = false;
   }
 
-  submitForm(): void {
+  submitPolicy(): void {
+    this.isConfirmLoading = true;
+
+    const {policyName, type,policyNo,premium} = this.policyForm.value
     if (this.policyForm.valid) {
-      console.log('submit', this.policyForm.value);
+
+      const payload = {
+        policyName: policyName,
+        insuranceType: type,
+        policyNumber: policyNo,
+        premiumAmount: parseInt(premium)
+      }
+
+      this.service.addPolicy(payload).subscribe({
+        next: () => {
+          this.isVisible = false;
+          this.isConfirmLoading = false;
+          this.getPolicies();
+        },
+        error: () => {
+          this.isConfirmLoading = false;
+        }
+      });
     } else {
+      this.isConfirmLoading = false;
       Object.values(this.policyForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
