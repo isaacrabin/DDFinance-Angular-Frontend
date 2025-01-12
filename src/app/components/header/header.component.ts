@@ -8,6 +8,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { CommonModule } from '@angular/common';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { Router } from '@angular/router';
+import { SearchService } from '../../_core/services/search.service';
 
 
 
@@ -30,8 +31,14 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   constructor(
-    private router: Router
+    private router: Router,
+    private searchService: SearchService
   ){}
+
+  onSearch(e: any): void {
+    console.log('onSearch', e.target.value);
+    this.searchService.setSearchQuery(e.target.value); // Update the search query in the service
+  }
 
   logout(){
     this.router.navigate(['/login'])

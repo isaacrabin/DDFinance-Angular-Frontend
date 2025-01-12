@@ -6,7 +6,8 @@
             <input
               type="text"
               nz-input
-              placeholder="Search here"
+              (input)="onSearch($event)"
+              placeholder="Search policy..."
               class="bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400 p-1"
             />
           </nz-input-group>
@@ -25,7 +26,7 @@
 
             <a nz-dropdown [nzDropdownMenu]="menu" class="flex items-center gap-2">
               <nz-avatar nzIcon="user"></nz-avatar>
-              <span>User</span>
+              <span>DDF Admin</span>
               <span class="material-icons">
                 keyboard_arrow_down
               </span>

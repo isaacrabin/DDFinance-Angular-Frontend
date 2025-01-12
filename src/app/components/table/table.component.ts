@@ -12,6 +12,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 @Component({
@@ -27,11 +28,13 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     NzFormModule,
     NzDividerModule,
     NzTableModule,
+    NzSpinModule,
     NzModalModule],
 
   template: `
     <div class="container mx-auto py-4">
-    <nz-table #basicTable [nzData]="data">
+    <nz-spin [nzSpinning]="isLoading" nzTip="Loading...">
+    <nz-table #basicTable [nzData]="data" [nzLoading]="isLoading">
       <thead>
         <tr>
           <th>Policy Name</th>
@@ -61,6 +64,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
         }
       </tbody>
     </nz-table>
+    </nz-spin>
 
     <section>
     <nz-modal
@@ -126,6 +130,9 @@ export class TableComponent {
 
   confirmModal?: NzModalRef;
   @Input() data: Policy[] = [];
+  @Input() isLoading: boolean = false;
+
+  filteredData: Policy[] = [];
 
   isVisible = false;
   isConfirmLoading = false;
@@ -159,7 +166,7 @@ export class TableComponent {
       nzTitle: 'Do you Want to delete this policy?',
       nzContent: `This ${policy.policyName} policy will be deleted and removed from the database`,
       nzOnOk: () =>
-        new Promise((resolve, reject) => {
+
           setTimeout(()=>{
             this.service.deletePolicy(policy.id as number).subscribe(
               {
@@ -170,8 +177,7 @@ export class TableComponent {
               }
             )
             this.modal.closeAll();
-          }, 1000);
-        }).catch(() => console.log('Oops errors!'))
+          }, 1000)
     });
   }
 
@@ -180,6 +186,7 @@ export class TableComponent {
     this.service.getPolicies().subscribe({
       next: (res) => {
         this.data = res;
+        this.filteredData = res;
       },
       error: (err) => {
 
@@ -245,4 +252,5 @@ export class TableComponent {
       });
     }
 }
+
 }

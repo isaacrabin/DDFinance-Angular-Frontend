@@ -14,6 +14,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { TableComponent } from '../../components/table/table.component';
 import { ApiService } from '../../_core/services/api.service';
 import { Policy } from '../../_core/models/policy.model';
+import { SearchService } from '../../_core/services/search.service';
 
 
 
@@ -42,6 +43,8 @@ export class PoliciesComponent implements OnInit{
   isVisible = false;
   isConfirmLoading = false;
   policies: Policy[] = [];
+  filteredPolicies: Policy[] = [];
+  isLoading: boolean = false;
 
   policyForm: FormGroup;
 
@@ -52,7 +55,8 @@ export class PoliciesComponent implements OnInit{
   constructor(
     public iconService: NzIconService,
     private fb: FormBuilder,
-    private service: ApiService
+    private service: ApiService,
+    private searchService: SearchService
   ){
 
 
@@ -64,18 +68,28 @@ export class PoliciesComponent implements OnInit{
       });
   }
   ngOnInit(): void {
-    this.getPolicies()
+    this.getPolicies();
+
+    this.searchService.searchQuery$.subscribe((query) => {
+      this.filteredPolicies = this.filterPolicies(query);
+    });
+
   }
 
   getPolicies(): void {
-    this.service.getPolicies().subscribe({
-      next: (res) => {
-        this.policies = res;
-      },
-      error: (err) => {
-
-      }
-    })
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.getPolicies().subscribe({
+        next: (res) => {
+          this.policies = res;
+          this.filteredPolicies = res;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+        }
+      })
+    },200)
    }
 
   showModal(): void {
@@ -126,6 +140,15 @@ export class PoliciesComponent implements OnInit{
         }
       });
     }
+}
+
+filterPolicies(query: string): Policy[] {
+  if (!query) {
+    return this.policies;
+  }
+  return this.policies.filter((policy) =>
+    policy.policyName.toLowerCase().includes(query.toLowerCase())
+  );
 }
 
 }

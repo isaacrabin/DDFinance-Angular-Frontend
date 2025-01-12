@@ -10,6 +10,7 @@ import { StatsCardComponent } from '../../components/stats-card/stats-card.compo
 import { TableComponent } from '../../components/table/table.component';
 import { ApiService } from '../../_core/services/api.service';
 import { Policy } from '../../_core/models/policy.model';
+import { SearchService } from '../../_core/services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -32,24 +33,46 @@ import { Policy } from '../../_core/models/policy.model';
 })
 export class HomeComponent implements OnInit {
 
-  policies: Policy[] = []
+  policies: Policy[] = [];
+  isLoading:boolean = false;
+  filteredPolicies: Policy[] = [];
 
   constructor(
-    private service: ApiService
+    private service: ApiService,
+    private searchService: SearchService
   ){}
   ngOnInit(): void {
     this.getPolicies();
+
+    this.searchService.searchQuery$.subscribe((query) => {
+      this.filteredPolicies = this.filterPolicies(query);
+    });
   }
 
 
- getPolicies(): void {
-  this.service.getPolicies().subscribe({
-    next: (res) => {
-      this.policies = res;
-    },
-    error: (err) => {
+  getPolicies(): void {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.getPolicies().subscribe({
+        next: (res) => {
+          this.policies = res;
+          this.filteredPolicies = res;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+        }
+      })
+    },200)
+   }
 
-    }
-  })
- }
+
+filterPolicies(query: string): Policy[] {
+  if (!query) {
+    return this.policies;
+  }
+  return this.policies.filter((policy) =>
+    policy.policyName.toLowerCase().includes(query.toLowerCase())
+  );
+}
 }

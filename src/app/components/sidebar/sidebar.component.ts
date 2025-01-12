@@ -13,7 +13,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  logoURL = 'assets/dd_logo.png';
+  logoURL = 'assets/logo_01.jpg';
   isExpanded = localStorage.getItem('is_expanded') === 'true';
 
   constructor(public router: Router){}

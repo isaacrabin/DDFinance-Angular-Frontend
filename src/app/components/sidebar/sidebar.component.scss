@@ -17,11 +17,12 @@ aside {
 	}
 
 	.logo {
-		margin-bottom: 1rem;
-    
+		// margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
 
 		img {
-			width: 2rem;
+			width: 3rem;
 		}
 
     .logo-text{

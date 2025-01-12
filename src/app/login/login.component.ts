@@ -29,12 +29,21 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    this.loginForm.patchValue({
+      email: 'admin@ddfinance.com',
+      password: "Pass.Admin@123DDF",
+    })
   }
 
   onSubmit() {
-    this.router.navigate(['/app/home']);
-    // if (this.loginForm.valid) {
-    //   console.log('Login Data:', this.loginForm.value);
-    // }
+    this.isLoading = true;
+
+    if (this.loginForm.valid) {
+      setTimeout(() => {
+        this.router.navigate(['/app/home']);
+        this.isLoading = false;
+      },1000)
+    }
   }
 }

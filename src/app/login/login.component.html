@@ -4,6 +4,9 @@
 
   <!-- Login Card -->
   <div class="relative z-10 w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <div class="flex justify-center mb-6">
+      <img src="assets/dd_logo.png" class="w-64" alt="Logo">
+    </div>
     <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
       Login
     </h1>
@@ -44,16 +47,24 @@
         </ng-template>
       </div>
 
+      <div class="mb-2">
+        <h5> NB: Use these default credentials to login</h5>
+      </div>
+
       <!-- Submit Button -->
       <button
         nz-button
         nzType="primary"
         class="w-full h-10 bg-primaryBlue-300 text-white p-1"
-       
+        [disabled]="this.loginForm.invalid"
         [nzLoading]="isLoading"
       >
         Login
       </button>
     </form>
+
+    <div class="mt-4">
+      <h5>Powered By: Isaac Rabin</h5>
+    </div>
   </div>
 </div>
