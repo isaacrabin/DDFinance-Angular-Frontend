@@ -134,6 +134,7 @@ export class PoliciesComponent implements OnInit{
         },
         error: () => {
           this.isConfirmLoading = false;
+          this.toastr.warning('Ensure the Backend is running. Not reachable at the moment')
         }
       });
     } else {
